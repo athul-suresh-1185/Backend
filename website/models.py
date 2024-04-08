@@ -44,7 +44,7 @@ class Order(db.Model):
   __tablename__ = 'orders'
   order_id = db.Column(db.Integer, primary_key=True)
   order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-  token = db.Column(db.Inteer, nullable=False)
+  token = db.Column(db.Integer, nullable=False)
   user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
   user = db.relationship('User', backref=db.backref('orders', lazy=True))
   items = db.relationship('OrderItem', backref='order', lazy=True)
