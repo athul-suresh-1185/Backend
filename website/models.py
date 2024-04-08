@@ -25,22 +25,29 @@ class Food(db.Model):
 class MonthlyMenu(db.Model):
   __tablename__ = 'monthly_menu'
   food_id = db.Column(db.Integer, db.ForeignKey('food.food_id'), primary_key=True)
-  food = db.relationship('Food', backref=db.backref('monthly_menu', lazy=True))
+  food = db.relationship('Food', backref=db.backref('monthly_menu', lazy=True))fo
 
 class DailyMenu(db.Model)
   __tablename__ = 'daily_menu'
   food_id = db.Column(db.Integer, db.ForeignKey('food.food_id'), primary_key=True)
   food = db.relationship('Food', backref=db.backref('daily_menu', lazy=True))
 
+class OrderItem(db.Model):
+  __tablename__ = 'order_items'
+  id = db.Column(db.Integer, primary_key=True)
+  order_id = db.Column(db.Integer, db.ForeignKey('orders.order_id'), nullable=False)
+  food_id = db.Column(db.Integer, db.ForeignKey('food.food_id'), nullable=False)
+  quantity = db.Column(db.Integer, nullable=False)
+  total_price = db.Column(db.Float, nullable=False)
+
 class Order(db.Model):
   __tablename__ = 'orders'
   order_id = db.Column(db.Integer, primary_key=True)
-  order_date = db.Column(db.DateTime, nullable=False)
-  token = db.Column(db.String(100), nullable=False)
+  order_date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+  token = db.Column(db.Inteer, nullable=False)
   user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
   user = db.relationship('User', backref=db.backref('orders', lazy=True))
-  item_id = db.Column(db.Integer, db.ForeignKey('food.food_id'), nullable=False)
-  item = db.relationship('Food', backref=db.backref('orders', lazy=True))
-  quantity = db.Column(db.Integer, nullable=False)
+  items = db.relationship('OrderItem', backref='order', lazy=True)
   status = db.Column(db.String(50), nullable=False)
   total_amount = db.Column(db.Float, nullable=False)
+
