@@ -1,5 +1,13 @@
 {
   "files": {
+    "website/admin.py": [
+      {
+        "id": "c22754ed-a83c-48e3-bf31-6b13070f3dfe",
+        "line": 14,
+        "version": 478,
+        "index": 326
+      }
+    ],
     "website/views.py": [
       {
         "id": "bb5901c9-58e8-4292-b903-3614827a7fa9",
