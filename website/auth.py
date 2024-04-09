@@ -24,7 +24,7 @@ def token_required(func):
 
     return decorated
 
-@app.route('/login', methods=['POST'])
+@app.route('/user-login', methods=['POST'])
 def login():
     auth = request.authorization
 

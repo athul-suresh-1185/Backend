@@ -26,6 +26,7 @@ def token_required(func):
 
     return decorated
 
+
 # Add food items endpoint
 @app.route('/add-food-items', methods=['POST'])
 @token_required

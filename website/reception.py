@@ -6,7 +6,6 @@ from auth import token_required
 
 @app.route('/', methods=['GET'])
 @token_required
-
 def show_monthly_menu(current_user):
 
 food_details = []
@@ -127,6 +126,26 @@ def token_required(func):
         return func(current_user, *args, **kwargs)
 
     return decorated
+
+@app.route('/reception-login', methods=['POST'])
+def login():
+    auth = request.authorization
+
+    if not auth or not auth.username or not auth.password:
+        return jsonify({'message': 'Could not verify'}), 401
+
+    user = User.query.filter_by(username=auth.username).first()
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 401
+
+    if user.password != auth.password:
+        return jsonify({'message': 'Invalid password'}), 401
+
+    token = jwt.encode({'user_id': user.id}, app.config['SECRET_KEY'], algorithm='HS256')
+
+    return jsonify({'token': token})
+
 
 # Show monthly menu endpoint
 @app.route('/monthly-menu', methods=['GET'])

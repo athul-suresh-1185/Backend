@@ -1,0 +1,6 @@
+/my-flask-app
+/static
+/templates
+app.py
+requirements.txt
+Procfile
